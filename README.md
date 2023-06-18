@@ -1,6 +1,6 @@
 <p align="center">
-	<img src="https://github.com/nocodeleaks/quepasa/raw/main/src/assets/favicon.png" alt="Quepasa-logo" width="100" />	
-	<p align="center">Quepasa é um software de código aberto, totalmente gratuito, para troca de mensagens com a plataforma Whatsapp</p>
+	<img src="https://github.com/EngajamentoFlow/perfexquepasa/blob/main/perfex-crm-logo.jpg" alt="Quepasa-logo" width="100" />	
+	<p align="center">O Perfex CRM é uma plataforma completa de gestão de relacionamento com o cliente, que oferece recursos para vendas, suporte, faturamento e muito mais.</p>
 </p>
 <hr />
 <p align="left">
@@ -10,18 +10,6 @@
 	<img src="https://whatsapp.com/favicon.ico" alt="WhatsAPP-logo" width="32" />
 	<span>Grupo WhatsaAPP Chatwoot : </span>
 	<a href="https://chat.whatsapp.com/CLKge3hmHmmBcIL04mBzmT" target="_blank">Grupo</a>
-<hr />
-<p align="left">
-	<img src="https://whatsapp.com/favicon.ico" alt="WhatsAPP-logo" width="32" />
-	<span>Grupo WhatsaAPP Quepasa: </span>
-	<a href="https://chat.whatsapp.com/Cv5WfmujRzE09yQ6hagYim" target="_blank">Grupo</a>
-</p>
-<hr />
-<p align="left">
-	<img src="https://whatsapp.com/favicon.ico" alt="WhatsAPP-logo" width="32" />
-	<span>Grupo WhatsaAPP N8N: </span>
-	<a href="https://telinkei.com/gp-n8n-zap" target="_blank">Grupo</a>
-</p>
 <hr />
 <hr />
 
