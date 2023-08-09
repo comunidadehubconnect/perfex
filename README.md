@@ -13,7 +13,7 @@
 <hr />
 <hr />
 
-**Manual integração CRM PERFEX**
+### Manual integração CRM PERFEX
 
 Acesse seu perfex CRM
 
@@ -27,7 +27,7 @@ https://seudominio/admin/leads/sources
 
 Clique no botão `Nova Fonte` defina um nome e salve
 
-Baixe modulo API Perfex desse Github
+### Baixe modulo API Perfex desse Github
 
 Vá até a opção: `Definições>Módulos` faça upload do módulo baixado, instale e ative.
 
@@ -37,21 +37,21 @@ https://seudominio.com.br/admin/api/api_management
 
 Crie nova chave de API clicando no botão `New User`, preencha as informações e salve!
 
-Acesse seu N8N e importe os seguintes workflows:
+### Acesse seu N8N e importe os seguintes workflows:
 
 - PerfexCRM
 - CadastroPerfexcrm
 - QuepasaAutomatic
 - AjustaContato
 
-Configure as credenciais do Google Sheets e Postgres!
+### Configure as credenciais do Google Sheets e Postgres!
 
 Crie uma planilha no Google Sheets com as seguintes colunas:
 - Conta
 - Url Perfex
 - Token
 
-Acesse seu Chatwoot, vá até contatos e procure pelo BOT, envie uma nova mensagem da seguinte forma:
+### Acesse seu Chatwoot, vá até contatos e procure pelo BOT, envie uma nova mensagem da seguinte forma:
 
 ```bash
 /perfexcrm
