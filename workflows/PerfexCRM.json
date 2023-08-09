@@ -1,0 +1,344 @@
+{
+  "name": "PerfexCRM",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Coloque Informações').item.json[\"Url Perfex\"] }}/api/leads",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=authtoken",
+              "value": "={{ $('Coloque Informações').item.json[\"Token Perfex\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "source",
+              "value": "1"
+            },
+            {
+              "name": "status",
+              "value": "1"
+            },
+            {
+              "name": "name",
+              "value": "={{ $('Coloque Informações').item.json[\"Nome\"] }}"
+            },
+            {
+              "name": "phonenumber",
+              "value": "={{ $('Coloque Informações').item.json[\"Numero de Telefone\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ad6ec2f2-e5bc-4b17-b78c-97341585ada0",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        960,
+        900
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $('Coloque Informações').item.json['Numero de Telefone'] }}",
+              "value2": "={{ $json.phonenumber }}"
+            }
+          ]
+        }
+      },
+      "id": "e53f528a-d007-4692-a3ce-e7ae82accf5e",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        680,
+        780
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "a8496905-383a-4ab5-964b-ce88f30757ee",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        960,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['Url Perfex'] }}/api/leads/search/{{ $json.Numero }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authtoken",
+              "value": "={{ $json['Token Perfex'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6c8192ad-ce50-49be-ace7-9b527e73d961",
+      "name": "Captura",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        440,
+        780
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "Url Perfex",
+              "value": "={{ $json['Url Perfex'] }}"
+            },
+            {
+              "name": "Token Perfex",
+              "value": "={{ $json.Token }}"
+            },
+            {
+              "name": "Nome",
+              "value": "={{ $('Webhook').item.json.body.name }}"
+            }
+          ],
+          "number": [
+            {
+              "name": "Numero de Telefone",
+              "value": "={{ $('Webhook').item.json.body.identifier }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "49e5422a-3210-40ae-847a-b1ec70f3a199",
+      "name": "Coloque Informações",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        0,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Numero",
+              "value": "={{ $json['Numero de Telefone'].replace(/[\\D]/gi, \"\").replace(/^55/, \"\")}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "da7935e2-634f-41fc-bbad-d106b0ef5664",
+      "name": "Ajusta numero de Telefone",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        220,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "ID_PLANILHA-G-SHEETS",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1491532339,
+          "mode": "list",
+          "cachedResultName": "PERFEXCRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/ID_PLANILHA-G-SHEETS/edit#gid=1491532339"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Conta",
+              "lookupValue": "={{ $json.body.account.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3241bfdd-2d70-4257-aa3f-608c75a0e10e",
+      "name": "Verifica Usuario",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        -460,
+        800
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.Conta }}",
+              "operation": "equal",
+              "value2": "={{ $('Webhook').item.json.body.account.id }}"
+            }
+          ]
+        }
+      },
+      "id": "470358a1-e1a0-4bf2-940b-9a8dff8fec24",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        800
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "21c28f34-bc32-4b1e-b9d7-85c86cd8c752",
+      "name": "Get To AjustaContato",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        -660,
+        800
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Coloque Informações": {
+      "main": [
+        [
+          {
+            "node": "Ajusta numero de Telefone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Captura": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ajusta numero de Telefone": {
+      "main": [
+        [
+          {
+            "node": "Captura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verifica Usuario": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Coloque Informações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get To AjustaContato": {
+      "main": [
+        [
+          {
+            "node": "Verifica Usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "e13d0288-aec7-483c-b29f-07be6d2c3f82",
+  "id": "1022",
+  "meta": {
+    "instanceId": "0ae293448e22105e42fd857bc429864d684dc8e031ab307b2ed97c4a1f24397f"
+  },
+  "tags": [
+    {
+      "createdAt": "2023-07-28T22:09:42.733Z",
+      "updatedAt": "2023-07-28T22:09:42.733Z",
+      "id": "2",
+      "name": "CHATWOOT"
+    },
+    {
+      "createdAt": "2023-07-29T07:22:53.190Z",
+      "updatedAt": "2023-08-09T12:27:48.849Z",
+      "id": "5",
+      "name": "cwmkt"
+    }
+  ]
+}

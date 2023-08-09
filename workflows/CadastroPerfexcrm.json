@@ -1,0 +1,260 @@
+{
+  "name": "CadastroPerfexcrm",
+  "nodes": [
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "Conta",
+              "value": "={{ $json.body.messages[0].account_id }}"
+            },
+            {
+              "name": "Url Perfex",
+              "value": "={{$json.body.messages[0].content.match(/https:\\/\\/[^\\s]+/)[0]}}"
+            },
+            {
+              "name": "Token Perfex",
+              "value": "={{$json.body.messages[0].content.split(\" \")[2]}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2054a5cb-3dc3-4805-b673-d2b000cd266f",
+      "name": "Captura de Informações",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        120,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "ID_PLANILHA_G-SHEETS",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1491532339,
+          "mode": "list",
+          "cachedResultName": "PERFEXCRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/ID_PLANILHA_G-SHEETS/edit#gid=1491532339"
+        },
+        "columnToMatchOn": "Conta",
+        "valueToMatchOn": "={{ $json.Conta }}",
+        "fieldsUi": {
+          "values": [
+            {
+              "column": "Url Perfex",
+              "fieldValue": "={{ $json['Url Perfex'] }}"
+            },
+            {
+              "column": "Token",
+              "fieldValue": "={{ $json['Token Perfex'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "444650be-8e1a-4d50-aa08-9a63cf2efcdf",
+      "name": "Cadastra Usuario",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        360,
+        120
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "perfexcrm",
+        "options": {}
+      },
+      "id": "160cd6c7-39e0-4123-a436-d1bdf68ab074",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        220
+      ],
+      "webhookId": "57725725-d21e-4182-8875-7d092d04f078"
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json.body.messages[0].content.match(/\\/[^\\s]+/)[0]}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "/perfexcrm"
+            }
+          ]
+        }
+      },
+      "id": "5e2538d6-fd27-4bcf-8e36-239f594b62d6",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "=SELECT \"access_tokens\".\"token\" AS \"utoken\" FROM \"account_users\" INNER JOIN \"access_tokens\" ON \"access_tokens\".\"owner_id\" = \"account_users\".\"user_id\" WHERE \"account_users\".\"account_id\" = {{ $item(\"0\").$node[\"Webhook\"].json[\"body\"][\"messages\"][\"0\"][\"account_id\"] }} AND \"access_tokens\".\"owner_type\" = 'User' AND \"account_users\".\"role\" = 1 ORDER BY \"account_users\".\"id\" LIMIT 1;",
+        "additionalFields": {}
+      },
+      "id": "ac5f5630-044a-4cae-bb81-5bbc3d075b73",
+      "name": "Informa UToken",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 1,
+      "position": [
+        580,
+        120
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "1",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:3000/api/v1/accounts/{{ $item(\"0\").$node[\"Webhook\"].json[\"body\"][\"messages\"][\"0\"][\"account_id\"] }}/conversations/{{ $item(\"0\").$node[\"Webhook\"].json[\"body\"][\"messages\"][\"0\"][\"conversation_id\"] }}/messages ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "api_access_token",
+              "value": "={{ $item(\"0\").$node[\"Informa UToken\"].json[\"utoken\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "=Parabéns ✅!\nSeu Perfexcrm foi configurado com sucesso."
+            },
+            {
+              "name": "message_type",
+              "value": "incoming"
+            },
+            {
+              "name": "private",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d129d27d-038a-45c9-9126-f69273622c18",
+      "name": "MensagemCadastroSucesso",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        780,
+        120
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Captura de Informações": {
+      "main": [
+        [
+          {
+            "node": "Cadastra Usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Captura de Informações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cadastra Usuario": {
+      "main": [
+        [
+          {
+            "node": "Informa UToken",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Informa UToken": {
+      "main": [
+        [
+          {
+            "node": "MensagemCadastroSucesso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {},
+  "versionId": "c154ac7b-7652-4a43-ad95-c2a6c51f1273",
+  "id": "1031",
+  "meta": {
+    "instanceId": "0ae293448e22105e42fd857bc429864d684dc8e031ab307b2ed97c4a1f24397f"
+  },
+  "tags": [
+    {
+      "createdAt": "2023-07-28T22:09:42.733Z",
+      "updatedAt": "2023-07-28T22:09:42.733Z",
+      "id": "2",
+      "name": "CHATWOOT"
+    },
+    {
+      "createdAt": "2023-07-29T07:22:53.190Z",
+      "updatedAt": "2023-08-09T12:27:48.849Z",
+      "id": "5",
+      "name": "cwmkt"
+    }
+  ]
+}
