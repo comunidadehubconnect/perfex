@@ -13,17 +13,17 @@
 <hr />
 <hr />
 
-### Manual integração CRM PERFEX
+### Manual integração CRM PERFEX SASS
 
 Acesse seu perfex CRM
 
-https://seudominio/admin/leads/statuses
+https://seudominioperfexcrm/admin/leads/statuses
 
 Clique no botão `Novo Status do Lead` preencha as informações e no campo `Ordem / Posição` deixe definido com o número.
 
 Agora acesse a url abaixo:
 
-https://seudominio/admin/leads/sources
+https://seudominioperfexcrm/admin/leads/sources
 
 Clique no botão `Nova Fonte` defina um nome e salve
 
@@ -33,7 +33,7 @@ Vá até a opção: `Definições>Módulos` faça upload do módulo baixado, ins
 
 Acesse a url abaixo:
 
-https://seudominio.com.br/admin/api/api_management
+https://seudominioperfexcrm.com.br/admin/api/api_management
 
 Crie nova chave de API clicando no botão `New User`, preencha as informações e salve!
 
@@ -55,6 +55,7 @@ Crie uma planilha no Google Sheets com as seguintes colunas:
 
 ```bash
 /perfexcrm
+
 Url: https://seudominioperfexcrm.com.br
 Token: Sua Chave de de API Perfexcrm
 ```
