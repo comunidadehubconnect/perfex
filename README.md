@@ -13,83 +13,50 @@
 <hr />
 <hr />
 
-
 **Manual integração CRM PERFEX**
-<hr />
 
 Acesse seu perfex CRM
-</p>
-https://seudominio/crm/admin/leads/statuses
-</p>
-Crie STATUS escrito Novo
-</p>
-Ordem / Posição 1
-</p>
 
-<hr />
+https://seudominio/admin/leads/statuses
 
-</p>
-Acesse seu perfex CRM
-</p>
+Clique no botão `Novo Status do Lead` preencha as informações e no campo `Ordem / Posição` deixe definido com o número.
+
+Agora acesse a url abaixo:
+
 https://seudominio/admin/leads/sources
-</p>
-Crie FONTE escrito Novo
-</p>
 
-<hr />
+Clique no botão `Nova Fonte` defina um nome e salve
 
-</p>
-Baixe modulo API Perfex desse git Github
-</p>
-Definições>Módulos
-</p>
-Instale modulo e ATIVE
-</p>
+Baixe modulo API Perfex desse Github
 
-<hr />
+Vá até a opção: `Definições>Módulos` faça upload do módulo baixado, instale e ative.
 
-</p>
-Acesse seu perfex CRM
-</p>
+Acesse a url abaixo:
+
 https://seudominio.com.br/admin/api/api_management
-</p>
-Crie novaAPI
-</p>
 
-<hr />
+Crie nova chave de API clicando no botão `New User`, preencha as informações e salve!
 
-</p>
-Acesse seu N8N suba **Worflow Perfex CRM**
-</p>
-NO Coloque Informações
-</p>
-Adicione Url Perfex: https://seudominio.com.br
-</p>
-Adicione Token Perfex: Token gerado no API do Perfex
-</p>
+Acesse seu N8N e importe os seguintes workflows:
 
-<hr />
+- PerfexCRM
+- CadastroPerfexcrm
+- QuepasaAutomatic
+- AjustaContato
 
-</p>
-Acesse seu Chatwoot 
-</p>
-configurações/integrações/webhook
-</p>
-Adic</p>ione Url
+Configure as credenciais do Google Sheets e Postgres!
 
-https://n8n.com.br/webhook/perfex
-</p>
-Marque evento :
-</p>
-Contato criado (contact_created)
-</p>
-Clique e Atualizar webhook
-</p>
+Crie uma planilha no Google Sheets com as seguintes colunas:
+- Conta
+- Url Perfex
+- Token
 
-<hr />
-<hr />
+Acesse seu Chatwoot, vá até contatos e procure pelo BOT, envie uma nova mensagem da seguinte forma:
 
-**Pronto tudo Funcionando**
+```bash
+/perfexcrm
+Url: https://seudominioperfexcrm.com.br
+Token: Sua Chave de de API Perfexcrm
+```
 
-<hr />
-<hr />
+Pronto tudo Funcionando 👍✅
