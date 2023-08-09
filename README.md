@@ -9,7 +9,7 @@
 <p align="left">
 	<img src="https://whatsapp.com/favicon.ico" alt="WhatsAPP-logo" width="32" />
 	<span>Grupo WhatsaAPP Chatwoot : </span>
-	<a href="https://chat.whatsapp.com/CLKge3hmHmmBcIL04mBzmT" target="_blank">Grupo</a>
+	<a href="https://chat.whatsapp.com/BvassXU7YEPH1pu1vFQ9rv" target="_blank">Grupo</a>
 <hr />
 <hr />
 
