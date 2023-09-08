@@ -1,17 +1,17 @@
 <p align="center">
-	<img src="https://github.com/EngajamentoFlow/perfexquepasa/blob/main/perfex-crm-logo.jpg" alt="Quepasa-logo" width="100" />	
-	<p align="center">O Perfex CRM é uma plataforma completa de gestão de relacionamento com o cliente, que oferece recursos para vendas, suporte, faturamento e muito mais.</p>
+<img src="https://cwmkt.com.br/wp-content/uploads/2023/08/logo-github-cwmkt.svg" alt="DispZap Whats Marketing" width="240" />
+<p align="center">Seja bem-vindo ao Guia Perfex CRM 🚀</p>
 </p>
-<hr />
-<p align="left">
+  
+<p align="center">
+<img src="https://whatsapp.com/favicon.ico" alt="WhatsAPP-logo" width="32" />
+<span>Grupo WhatsaAPP: </span>
+<a href="https://link.cwmkt.com.br/grupo-whats" target="_blank">Grupo</a>
 </p>
-<hr />
-<p align="left">
-	<img src="https://whatsapp.com/favicon.ico" alt="WhatsAPP-logo" width="32" />
-	<span>Grupo WhatsaAPP Chatwoot : </span>
-	<a href="https://chat.whatsapp.com/BvassXU7YEPH1pu1vFQ9rv" target="_blank">Grupo</a>
+
 <hr />
 <hr />
+
 
 ### Manual integração CRM PERFEX SASS
 
@@ -59,5 +59,3 @@ Crie uma planilha no Google Sheets com as seguintes colunas:
 Url: https://seudominioperfexcrm.com.br
 Token: Sua Chave de de API Perfexcrm
 ```
-
-Pronto tudo Funcionando 👍✅
